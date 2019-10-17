@@ -8,12 +8,20 @@ const knex = require('knex');
 const db = knex({
   client: 'pg',
   connection: {
-    host : '127.0.0.1',
-    user : 'postgres',
-    password : 'Postgres7915!',
-    database : 'smart-brain'
+    connectionString : process.env.DATABASE_URL,
+    ssl: true,
   }
 });
+
+// const db = knex({
+//   client: 'pg',
+//   connection: {
+//     host : 'postgresql-triangular-34334',
+//     user : 'postgres',
+//     password : 'Postgres7915!',
+//     database : 'smart-brain'
+//   }
+// });
 
 
 db.select('*').from('users').then(data => {
