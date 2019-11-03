@@ -31,26 +31,26 @@ db.select('*').from('users').then(data => {
 const app = express();
 
 
-const database = {
-	users: [
-		{
-			id: '123',
-			name: 'John',
-			email: 'john@gmail.com',
-			password: 'cookies',
-			entries: 0,
-			joined: new Date()
-		},
-		{
-			id: '124',
-			name: 'Sally',
-			email: 'Sally@gmail.com',
-			password: 'bananas',
-			entries: 0,
-			joined: new Date()
-		},
-	]
-}
+// const database = {
+// 	users: [
+// 		{
+// 			id: '123',
+// 			name: 'John',
+// 			email: 'john@gmail.com',
+// 			password: 'cookies',
+// 			entries: 0,
+// 			joined: new Date()
+// 		},
+// 		{
+// 			id: '124',
+// 			name: 'Sally',
+// 			email: 'Sally@gmail.com',
+// 			password: 'bananas',
+// 			entries: 0,
+// 			joined: new Date()
+// 		},
+// 	]
+// }
 
 
 app.use(cors());
@@ -81,6 +81,9 @@ app.post('/signin', (req, res) => {
 
 app.post('/register', (req, res) => {
 	const {email, name, password} = req.body;
+	if (!email || !name || !password) {
+    return res.status(400).json('incorrect form submission');
+    }
 	const hash = bcrypt.hashSync(password, 11);
 		db.transaction(trx => {
 			trx.insert({
